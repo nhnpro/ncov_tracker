@@ -1,0 +1,143 @@
+import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:launch_review/launch_review.dart';
+import '../app_localizations.dart';
+import 'DataController.dart';
+
+class Settings extends StatefulWidget {
+  @override
+  _SettingsState createState() => _SettingsState();
+}
+
+class _SettingsState extends State<Settings> {
+  _launchURL() async {
+    const  url = "https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6";
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        titleSpacing: 10,
+        backgroundColor: Colors.white,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              width: 40,
+              height: 40,
+              margin: EdgeInsets.only(right: 10),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(5),
+                child: Image.asset(
+                  'assets/img/icon_about.png',
+                  width: 50,
+                ),
+              ),
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  AppLocalizations.of(context).translate('aboutTitle'),
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.fromLTRB(25, 20, 25, 25),
+          child: Center(
+            child: Column(
+              children: <Widget>[
+                Image.asset(
+                  'assets/img/illustration.png',
+                  width: 300,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 50),
+                ),
+                Text(
+                  AppLocalizations.of(context).translate('welcomeString'),
+                  style: TextStyle(
+                    color: Theme.of(context).accentColor,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  AppLocalizations.of(context)
+                      .translate('appTitle')
+                      .toUpperCase(),
+                  style: TextStyle(
+                    fontSize: 30,
+                    color: Theme.of(context).primaryColor,
+                    fontFamily: 'Bebas',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 30),
+                ),
+                Text(
+                  AppLocalizations.of(context).translate('appDesc'),//+"\n Sheet:" + googleSheetURL,
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 15,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 30),
+                ),
+                MaterialButton(
+                  onPressed: _launchURL,
+                  minWidth: double.infinity,
+                  height: 40,
+                  child: Text(
+                    AppLocalizations.of(context).translate('viewWeb'),
+                    style: TextStyle(fontSize: 23),
+                  ),
+                  color: Theme.of(context).primaryColor,
+                  textColor: Colors.white,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 10),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width*0.7,
+                  child:
+                MaterialButton(
+                  onPressed: () {LaunchReview.launch();},
+                  minWidth: double.infinity,
+                  height: 40,
+                  color: Theme.of(context).secondaryHeaderColor,
+                  textColor: Theme.of(context).accentColor,
+                  child: Text(
+                    AppLocalizations.of(context).translate('rateMe'),
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

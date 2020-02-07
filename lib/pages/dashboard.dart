@@ -1,12 +1,15 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:virus_corona_tracker/Country.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:virus_corona_tracker/pages/DataByCountry.dart';
 
 import '../app_localizations.dart';
 import 'DataController.dart';
@@ -101,7 +104,8 @@ class _DashboardState extends State<Dashboard> {
     }
   }
 
-  void Refresh() {
+  StateItem currentStateItem;
+  Future<void> Refresh() async {
     if (progressDialog.isShowing()) return;
     progressDialog.style(
         message: AppLocalizations.of(context).translate("updating"));
@@ -117,7 +121,8 @@ class _DashboardState extends State<Dashboard> {
     }
   }
 
-  Widget buildAppBarFlexible(BuildContext context) {
+  Widget buildAppBarFlexible(
+      AsyncSnapshot<StateItem> currentStateItem, BuildContext context) {
     return Padding(
       padding: EdgeInsets.fromLTRB(25, 30, 25, 0),
       child: Container(
@@ -198,7 +203,9 @@ class _DashboardState extends State<Dashboard> {
               padding: EdgeInsets.only(top: 10),
             ),
             Text(
-              numberFormatter.format(totalConfirmedCase),
+              numberFormatter.format(!currentStateItem.hasData
+                  ? totalConfirmedCase
+                  : currentStateItem.data?.num_confirm),
               style: TextStyle(
                 color: Theme.of(context).primaryColor,
                 fontSize: 80,
@@ -229,7 +236,10 @@ class _DashboardState extends State<Dashboard> {
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text: numberFormatter.format(totalDeathCase),
+                                text: numberFormatter.format(
+                                    !currentStateItem.hasData
+                                        ? totalDeathCase
+                                        : currentStateItem.data.num_dead),
                                 style: TextStyle(
                                   fontSize: 20,
                                   color: Colors.red,
@@ -265,8 +275,10 @@ class _DashboardState extends State<Dashboard> {
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text:
-                                    numberFormatter.format(totalRecoveredCase),
+                                text: numberFormatter.format(
+                                    !currentStateItem.hasData
+                                        ? totalRecoveredCase
+                                        : currentStateItem.data.num_heal),
                                 style: TextStyle(
                                   fontSize: 20,
                                   color: Colors.lightGreen,
@@ -500,7 +512,12 @@ class _DashboardState extends State<Dashboard> {
           )
         ],
       ),
-      body: SingleChildScrollView(child: buildAppBarFlexible(context)),
+      body: FutureBuilder<StateItem>(
+          future: fetchStat(Client()),
+          builder: (BuildContext context, AsyncSnapshot<StateItem> snapshot) {
+            return SingleChildScrollView(
+                child: buildAppBarFlexible(snapshot, context));
+          }),
     );
   }
 

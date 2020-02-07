@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
-
+import 'dart:convert';
 import 'package:csv/csv.dart';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 
 import 'DataByCountry.dart';
@@ -43,6 +44,7 @@ DateTime GetLastUpdateDate() {
   return lastUpdateTime;
 }
 
+final String apiStatURL = 'https://api.coronatracker.com/stats';
 final String googleSheetURL =
     "https://docs.google.com/spreadsheets/d/1wQVypefm946ch4XDp37uZ-wartW4V7ILdg-qYiDXUHM/export?format=csv";
 final String confirmedTimeSeriesURL =
@@ -51,8 +53,30 @@ final String recoveredTimeSeriesURL =
     "https://docs.google.com/spreadsheets/d/1UF2pSkFTURko2OvfHWWlFpDFAr1UxCBA4JLwlSP6KFo/gviz/tq?tqx=out:csv&sheet=recovered";
 final String deathTimeSeriesURL =
     "https://docs.google.com/spreadsheets/d/1UF2pSkFTURko2OvfHWWlFpDFAr1UxCBA4JLwlSP6KFo/gviz/tq?tqx=out:csv&sheet=death";
-void downloadncovsheet(VoidCallback onComplete) {
+
+void downloadncovsheet(onComplete) {
   downloadCSV(googleSheetURL, onComplete);
+}
+
+Future<StateItem> fetchStat(Client client) async {
+  final response = await client.get(apiStatURL);
+  return StateItem.fromJson(json.decode(response.body));
+}
+
+void customGetUrl(url, onComplete) {
+  HttpClient client = new HttpClient();
+  var _downloadData = StringBuffer();
+
+  client.getUrl(Uri.parse(url)).then((HttpClientRequest request) {
+    return request.close();
+  }).then((HttpClientResponse response) {
+    response.transform(utf8.decoder).listen((d) => _downloadData.write(d),
+        onDone: () {
+      onComplete(_downloadData.toString());
+    }, onError: (err) {
+      onComplete(null);
+    });
+  });
 }
 
 void downloadCSV(url, VoidCallback onComplete) {

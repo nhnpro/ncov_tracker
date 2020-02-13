@@ -62,6 +62,7 @@ class _HomeState extends State<Home> {
                 );
               },
             ),
+            Settings(),
             Consumer2<NewsService, StatsService>(
               builder: (context, newsService, statsService, _) {
                 return NewsPage(
@@ -72,12 +73,11 @@ class _HomeState extends State<Home> {
             ),
 
             MedicalPage(),
-            Settings(),
-            Settings(),
+
+            //   Settings(),
           ],
         ),
       ),
-
       bottomNavigationBar: FFNavigationBar(
         theme: FFNavigationBarTheme(
           barBackgroundColor: Colors.white,
@@ -94,28 +94,28 @@ class _HomeState extends State<Home> {
         },
         items: [
           FFNavigationBarItem(
-            iconData:  Icons.home,
-            label:  AppLocalizations.of(context).translate('menuHome'),
-          ),
-          FFNavigationBarItem(
-            iconData: Icons.library_books,
-            label:  AppLocalizations.of(context).translate('news'),
-          ),
-          FFNavigationBarItem(
-            iconData: Icons.healing,
-            label:  AppLocalizations.of(context).translate('medical'),
+            iconData: Icons.home,
+            label: AppLocalizations.of(context).translate('menuHome'),
           ),
           FFNavigationBarItem(
             iconData: Icons.show_chart,
-            label:  AppLocalizations.of(context).translate('analytics'),
+            label: AppLocalizations.of(context).translate('analytics'),
           ),
           FFNavigationBarItem(
+            iconData: Icons.library_books,
+            label: AppLocalizations.of(context).translate('news'),
+          ),
+          FFNavigationBarItem(
+            iconData: Icons.healing,
+            label: AppLocalizations.of(context).translate('medical'),
+          ),
+
+          /*FFNavigationBarItem(
             iconData: Icons.settings,
             label:  AppLocalizations.of(context).translate('menuSettings'),
-          ),
+          ),*/
         ],
       ),
-   
     );
   }
 }

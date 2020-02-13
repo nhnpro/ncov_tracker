@@ -24,14 +24,14 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   draggable_scrollbar: ^0.0.4
   flutter_custom_tabs: ^0.6.0
+  ff_navigation_bar:
   flutter_svg: ^0.17.0
   flag: ^1.0.3
   built_collection: ^4.3.2
   built_value: ^7.0.8
   provider: ^4.0.2
   recase: ^3.0.0
-  shared_preferences: ^0.5.6+1
-  share: ^0.6.3+5
+  shared_preferences:
   webview_flutter: ^0.3.19+5
   cupertino_icons: ^0.1.2
   url_launcher:
@@ -41,6 +41,7 @@ dependencies:
   csv:
   http:
   ant_icons: ^1.0.0
+  division:
   cached_network_image: ^2.0.0
   launch_review: ^2.0.0
   progress_dialog: ^1.2.0

@@ -106,7 +106,7 @@ class _NewsPageState extends State<NewsPage> {
     );
   }
 
-  _backtoTop() => newsFeedController.jumpTo(0.0);
+  _backtoTop() => newsFeedController.jumpTo(0.1);
 
   @override
   Widget build(BuildContext context) {
@@ -118,58 +118,10 @@ class _NewsPageState extends State<NewsPage> {
             return [
               SliverAppBar(
                 centerTitle: true,
-                pinned: true,
-                floating: false,
-                expandedHeight: 220,
                 forceElevated: true,
-
-                bottom: PreferredSize(
-                  preferredSize: Size.fromHeight(220.0),
-                  child: Container(
-                    height: 220,
-                    width: MediaQuery.of(context).size.width*1,
-                    alignment: Alignment(0.0, 0.0),
-                    decoration: BoxDecoration(
-                      color: Colors.blueGrey.withAlpha(80),
-                   /*   border: Border.all(
-                        color: Colors.black.withAlpha(50),
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(10),*/
-                    ),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          CounterWrapper(
-                            title: AppLocalizations.of(context).translate('allCases'),
-                            color: Color(0xFFB03060),
-                            number: widget.statsService.stats?.numConfirm ?? 0,
-                          ),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                MiniCounterWrapper(
-                                  title: AppLocalizations.of(context).translate('deaths'),
-                                  color: Colors.grey[700],
-                                  number:
-                                      widget.statsService.stats?.numDead ?? 0,
-                                ),
-                                Padding(padding: const EdgeInsets.symmetric(
-                                  horizontal: 10.0,
-                                  vertical: 10.0,
-                                )),
-                                MiniCounterWrapper(
-                                  title: AppLocalizations.of(context).translate('Recovered'),
-                                  color: Color(0xFF5DBD4A),
-                                  number:
-                                      widget.statsService.stats?.numHeal ?? 0,
-                                ),
-                              ]),
-                        ]),
-                  ),
-                ),
+                pinned: true,
                 title: Text(
-                  AppLocalizations.of(context).translate('appTitle'),
+                  AppLocalizations.of(context).translate('news'),
                   style: TextStyle(
                     fontSize: 24.0,
                     fontFamily: 'Bebas',

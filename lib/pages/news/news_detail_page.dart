@@ -3,7 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:virus_corona_tracker/model/model.dart';
 import 'package:virus_corona_tracker/utils/helper.dart';
 import 'package:flutter/material.dart';
-import 'package:share/share.dart';
+//import 'package:share/share.dart';
 
 class NewsDetailPage extends StatefulWidget {
   final News news;
@@ -53,7 +53,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                 IconButton(
                   icon: Icon(AntIcons.share_alt),
                   onPressed: () {
-                    Share.share('Check this out! \n ${widget.news.url}');
+                    //Share.share('Check this out! \n ${widget.news.url}');
                   },
                 )
               ],

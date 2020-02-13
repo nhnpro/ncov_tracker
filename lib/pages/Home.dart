@@ -1,3 +1,4 @@
+import 'package:ff_navigation_bar/ff_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:virus_corona_tracker/core/news.dart';
@@ -54,6 +55,13 @@ class _HomeState extends State<Home> {
         child: IndexedStack(
           index: currentTab,
           children: <Widget>[
+            Consumer<StatsService>(
+              builder: (context, statsService, _) {
+                return StatisticsPage(
+                  statsService: statsService,
+                );
+              },
+            ),
             Consumer2<NewsService, StatsService>(
               builder: (context, newsService, statsService, _) {
                 return NewsPage(
@@ -62,130 +70,52 @@ class _HomeState extends State<Home> {
                 );
               },
             ),
-            Consumer<StatsService>(
-              builder: (context, statsService, _) {
-                return StatisticsPage(
-                  statsService: statsService,
-                );
-              },
-            ),
+
             MedicalPage(),
+            Settings(),
             Settings(),
           ],
         ),
       ),
 
-      bottomNavigationBar: BottomAppBar(
-        shape: CircularNotchedRectangle(),
-        notchMargin: 10,
-        child: Container(
-          height: 60,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  MaterialButton(
-                    minWidth: 40,
-                    onPressed: () {
-                      setState(() {
-                        currentTab = 0;
-                      });
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(
-                          Icons.dashboard,
-                          color: currentTab == 0 ? Colors.blue : Colors.grey,
-                        ),
-                        Text(
-                          AppLocalizations.of(context).translate('menuHome'),
-                          style: TextStyle(
-                            color: currentTab == 0 ? Colors.blue : Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  MaterialButton(
-                    minWidth: 40,
-                    onPressed: () {
-                      setState(() {
-                        currentTab = 1;
-                      });
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(
-                          Icons.multiline_chart,
-                          color: currentTab == 1 ? Colors.blue : Colors.grey,
-                        ),
-                        Text(
-                          AppLocalizations.of(context).translate('analytics'),
-                          style: TextStyle(
-                            color: currentTab == 1 ? Colors.blue : Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  MaterialButton(
-                    minWidth: 40,
-                    onPressed: () {
-                      setState(() {
-                        currentTab = 2;
-                      });
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(
-                          Icons.healing,
-                          color: currentTab == 2 ? Colors.blue : Colors.grey,
-                        ),
-                        Text(
-                          AppLocalizations.of(context).translate('medical'),
-                          style: TextStyle(
-                            color: currentTab == 2 ? Colors.blue : Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  MaterialButton(
-                    minWidth: 40,
-                    onPressed: () {
-                      setState(() {
-                        currentTab = 3;
-                      });
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(
-                          Icons.settings,
-                          color: currentTab == 3 ? Colors.blue : Colors.grey,
-                        ),
-                        Text(
-                          AppLocalizations.of(context)
-                              .translate('menuSettings'),
-                          style: TextStyle(
-                            color: currentTab == 3 ? Colors.blue : Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-
-            ],
-          ),
+      bottomNavigationBar: FFNavigationBar(
+        theme: FFNavigationBarTheme(
+          barBackgroundColor: Colors.white,
+          selectedItemBorderColor: Colors.yellow,
+          selectedItemBackgroundColor: Colors.green,
+          selectedItemIconColor: Colors.white,
+          selectedItemLabelColor: Colors.black,
         ),
+        selectedIndex: currentTab,
+        onSelectTab: (index) {
+          setState(() {
+            currentTab = index;
+          });
+        },
+        items: [
+          FFNavigationBarItem(
+            iconData:  Icons.home,
+            label:  AppLocalizations.of(context).translate('menuHome'),
+          ),
+          FFNavigationBarItem(
+            iconData: Icons.library_books,
+            label:  AppLocalizations.of(context).translate('news'),
+          ),
+          FFNavigationBarItem(
+            iconData: Icons.healing,
+            label:  AppLocalizations.of(context).translate('medical'),
+          ),
+          FFNavigationBarItem(
+            iconData: Icons.show_chart,
+            label:  AppLocalizations.of(context).translate('analytics'),
+          ),
+          FFNavigationBarItem(
+            iconData: Icons.settings,
+            label:  AppLocalizations.of(context).translate('menuSettings'),
+          ),
+        ],
       ),
+   
     );
   }
 }

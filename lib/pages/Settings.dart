@@ -11,7 +11,8 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   _launchURL() async {
-    const  url = "https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6";
+    const url =
+        "https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6";
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -23,38 +24,17 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
-        titleSpacing: 10,
-        backgroundColor: Colors.white,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              width: 40,
-              height: 40,
-              margin: EdgeInsets.only(right: 10),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(5),
-                child: Image.asset(
-                  'assets/img/icon_about.png',
-                  width: 50,
-                ),
-              ),
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  AppLocalizations.of(context).translate('aboutTitle'),
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ],
+        elevation: 2.0,
+        centerTitle: true,
+        backgroundColor: Colors.grey[50],
+        title: Text(
+          AppLocalizations.of(context).translate('menuSettings'),
+          style: TextStyle(
+            fontSize: 24.0,
+            fontFamily: 'Bebas',
+            color: Theme.of(context).accentColor,
+            fontWeight: FontWeight.w700,
+          ),
         ),
       ),
       backgroundColor: Colors.white,
@@ -94,7 +74,8 @@ class _SettingsState extends State<Settings> {
                   padding: EdgeInsets.only(top: 30),
                 ),
                 Text(
-                  AppLocalizations.of(context).translate('appDesc'),//+"\n Sheet:" + googleSheetURL,
+                  AppLocalizations.of(context)
+                      .translate('appDesc'), //+"\n Sheet:" + googleSheetURL,
                   style: TextStyle(
                     color: Colors.grey,
                     fontSize: 15,
@@ -119,19 +100,20 @@ class _SettingsState extends State<Settings> {
                   padding: EdgeInsets.only(top: 10),
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width*0.7,
-                  child:
-                MaterialButton(
-                  onPressed: () {LaunchReview.launch();},
-                  minWidth: double.infinity,
-                  height: 40,
-                  color: Theme.of(context).secondaryHeaderColor,
-                  textColor: Theme.of(context).accentColor,
-                  child: Text(
-                    AppLocalizations.of(context).translate('rateMe'),
-                    style: TextStyle(fontSize: 16),
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  child: MaterialButton(
+                    onPressed: () {
+                      LaunchReview.launch();
+                    },
+                    minWidth: double.infinity,
+                    height: 40,
+                    color: Theme.of(context).secondaryHeaderColor,
+                    textColor: Theme.of(context).accentColor,
+                    child: Text(
+                      AppLocalizations.of(context).translate('rateMe'),
+                      style: TextStyle(fontSize: 16),
+                    ),
                   ),
-                ),
                 ),
               ],
             ),

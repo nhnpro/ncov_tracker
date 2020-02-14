@@ -41,6 +41,7 @@ dependencies:
   csv:
   http:
   ant_icons: ^1.0.0
+
   division:
   cached_network_image: ^2.0.0
   launch_review: ^2.0.0
@@ -75,6 +76,7 @@ flutter:
    - assets/img/shian.webp
    - assets/img/tanweiseng.webp
    - assets/img/my.svg
+   - assets/banner.png
    - lang/en.json
    - lang/vi.json
    - assets/img/bolt.png

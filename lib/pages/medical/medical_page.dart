@@ -1,3 +1,4 @@
+import 'package:ant_icons/ant_icons.dart';
 import 'package:virus_corona_tracker/app_localizations.dart';
 import 'package:virus_corona_tracker/core/hospital.dart';
 import 'package:virus_corona_tracker/core/travel_alert.dart';
@@ -54,35 +55,65 @@ class _MedicalPageState extends State<MedicalPage>
               style: TextStyle(
                 fontSize: 24.0,
                 fontFamily: 'Bebas',
-                color: Theme.of(context).accentColor,
+                color: Colors.white,
                 fontWeight: FontWeight.w700,
               ),
             ),
-            bottom: TabBar(
-              controller: _controller,
-              isScrollable: true,
-              indicatorWeight: 4.0,
-              labelColor: Theme.of(context).accentColor,
-              labelStyle: TextStyle(
-                fontSize: 16.0,
-                fontFamily: 'Bebas',
-                fontWeight: FontWeight.w700,
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(
+                  AntIcons.share_alt,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  Scaffold.of(context).openEndDrawer();
+                },
               ),
-              tabs: [
-                Tab(text: AppLocalizations.of(context).translate('hospitals')),
-                Tab(text:  AppLocalizations.of(context).translate('travelAlerts')),
-                ..._embededWebs
-                    .map(
-                      (web) => Tab(
-                        text:  AppLocalizations.of(context).translate(web.title),
-                      ),
-                    )
-                    .toList(),
-                Tab(text: 'Sources'),
-              ],
-            ),
+              IconButton(
+                icon: Icon(
+                  AntIcons.setting,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  Scaffold.of(context).openEndDrawer();
+                },
+              ),
+            ],
+            bottom: PreferredSize(
+                preferredSize: Size.fromHeight(50),
+                child: Container(
+                  child: TabBar(
+                    controller: _controller,
+                    isScrollable: true,
+                    indicatorWeight: 4.0,
+                    labelColor: Theme.of(context).accentColor,
+                    labelStyle: TextStyle(
+                      fontSize: 16.0,
+                      fontFamily: 'Bebas',
+                      fontWeight: FontWeight.w700,
+                    ),
+                    tabs: [
+                      Tab(
+                          text: AppLocalizations.of(context)
+                              .translate('hospitals')),
+                      Tab(
+                          text: AppLocalizations.of(context)
+                              .translate('travelAlerts')),
+                      ..._embededWebs
+                          .map(
+                            (web) => Tab(
+                              text: AppLocalizations.of(context)
+                                  .translate(web.title),
+                            ),
+                          )
+                          .toList(),
+                      Tab(text: 'Sources'),
+                    ],
+                  ),
+                  color: Colors.white,
+                )),
             elevation: 2.0,
-            backgroundColor: Colors.grey[50],
+            backgroundColor: Colors.blue,
             pinned: true,
             forceElevated: true,
           ),

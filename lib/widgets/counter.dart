@@ -5,6 +5,7 @@ class AnimatedCounter extends ImplicitlyAnimatedWidget {
   final int number;
   final double fontSize;
   final Color color;
+  final Color textColor;
 
   AnimatedCounter({
     Key key,
@@ -12,7 +13,8 @@ class AnimatedCounter extends ImplicitlyAnimatedWidget {
     this.color,
     Duration duration = const Duration(milliseconds: 500),
     Curve curve = Curves.linear,
-    this.fontSize
+    this.fontSize,
+    this.textColor
   }) : super(
           key: key,
           duration: duration,
@@ -32,16 +34,17 @@ class _AnimatedCounterState extends AnimatedWidgetBaseState<AnimatedCounter> {
     return Container(
       color: widget.color,
       padding: const EdgeInsets.only(
-        left: 24.0,
-        right: 24.0,
-        top: 8.0,
+        left: 10.0,
+        right: 10.0,
+        top: 4.0,
       ),
       child: Text(
         NumberFormat.decimalPattern().format( _counter.evaluate(animation)).toString(),
         style: TextStyle(
           fontSize: widget.fontSize,
+          fontFamily: 'Bebas',
           fontWeight: FontWeight.w700,
-          color: Colors.white,
+          color: widget.textColor,
         ),
       ),
     );
